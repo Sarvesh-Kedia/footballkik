@@ -12,7 +12,7 @@ $(document).ready(function(){
             formData.append('upload', uploadInput[0].files[0]);
 
             $.ajax({
-                url: '/dashboard',
+                url: '/uploadFile',
                 type: 'POST',
                 data: formData,
                 processData: false,

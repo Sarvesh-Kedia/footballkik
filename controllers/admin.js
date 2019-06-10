@@ -1,16 +1,27 @@
 const path = require('path');
 const fs = require('fs');
 
-module.exports = function(formidable) {
+module.exports = function(formidable, Club) {
     return {
         SetRouting: function(router){
             router.get('/dashboard', this.adminPage);
 
-            router.post('/dashboard', this.uploadFile);
+            router.post('/uploadFile', this.uploadFile);
+            router.post('/dashboard', this.adminPostPage)
         },
 
         adminPage: function(req, res){
             res.render('admin/dashboard');
+        },
+
+        adminPostPage: function(req, res){
+            const newClub = new Club();
+            newClub.name = req.body.club;
+            newClub.country = req.body.country;
+            newClub.image = req.body.upload;
+            newClub.save((err) => {
+                res.render('admin/dashboard');
+            })
         },
 
         uploadFile: function(req, res){
@@ -32,7 +43,7 @@ module.exports = function(formidable) {
                 console.log('File upload is succesful');
             });
 
-            form.parse (req);
+            form.parse(req);
         }
     }
 }
