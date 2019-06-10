@@ -14,7 +14,7 @@ const container = require('./container');
 
 
 
-container.resolve(function(users, _, admin){
+container.resolve(function(users, _, admin, home){
 
     mongoose.Promise = global.Promise;
     mongoose.connect('mongodb://localhost/footballkik', {userMongoClient: true});
@@ -33,7 +33,8 @@ container.resolve(function(users, _, admin){
         //Setup router
         const router = require('express-promise-router')();
         users.SetRouting(router);
-        admin.SetRouting(router); 
+        admin.SetRouting(router);
+        home.SetRouting(router);
 
         app.use(router);
     }
@@ -43,6 +44,7 @@ container.resolve(function(users, _, admin){
         require('./passport/passport-local');
 
         app.use(express.static('public')); 
+        //app.use(express.static('uploads')); 
         app.use(cookieParser());
         app.set('view engine', 'ejs');
         app.use(bodyParser.json());

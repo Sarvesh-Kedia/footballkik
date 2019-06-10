@@ -6,7 +6,6 @@ module.exports = function(_, passport, userValid) {
         SetRouting: function(router){
             router.get('/', this.indexPage);
             router.get('/signup', this.getSignUp);
-            router.get('/home', this.homePage)
             
             router.post('/', userValid.logInValidation, this.postLogin)
             router.post('/signup', userValid.signUpValidation, this.postSignUp);
@@ -36,10 +35,6 @@ module.exports = function(_, passport, userValid) {
             failureFlash: true
 
         }),
-
-        homePage: function(req, res){
-            return res.render('home');
-        }
 
     }
 }
